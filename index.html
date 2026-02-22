@@ -265,6 +265,71 @@
             min-height: 100vh;
         }
 
+        /* Floating title badge */
+        .floating-title {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 90;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--accent);
+            background: rgba(0, 212, 170, 0.1);
+            backdrop-filter: blur(12px);
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            border: 1px solid rgba(0, 212, 170, 0.2);
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            animation: fadeInBadge 0.4s ease;
+            transition: all 0.3s ease;
+            max-width: 280px;
+        }
+
+        .floating-title.visible {
+            display: flex;
+        }
+
+        .floating-title:hover {
+            background: rgba(0, 212, 170, 0.15);
+            border-color: rgba(0, 212, 170, 0.4);
+            transform: scale(1.02);
+        }
+
+        .floating-title::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse-dot 2s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        @keyframes fadeInBadge {
+            from {
+                opacity: 0;
+                transform: translateY(-10px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .floating-title span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
         /* Loading state */
         .loading-overlay {
             position: absolute;
@@ -602,6 +667,14 @@
                 height: 46px;
             }
 
+            .floating-title {
+                top: 1rem;
+                right: 1rem;
+                font-size: 0.7rem;
+                padding: 0.4rem 0.8rem;
+                max-width: 200px;
+            }
+
             /* Pastikan header sidebar tetap di bawah tombol di mobile */
             .sidebar-header {
                 padding: 6.5rem 1.25rem 1.5rem 1.25rem;
@@ -624,6 +697,11 @@
 
             .sidebar-tagline {
                 font-size: 0.75rem;
+            }
+
+            .floating-title {
+                max-width: 160px;
+                font-size: 0.65rem;
             }
         }
 
@@ -653,6 +731,11 @@
             <polyline points="20 6 9 17 4 12"></polyline>
         </svg>
         <span id="toastMessage">Menu berhasil dimuat</span>
+    </div>
+
+    <!-- Floating title badge -->
+    <div class="floating-title" id="floatingTitle">
+        <span id="floatingTitleText">Loading...</span>
     </div>
 
     <!-- Menu toggle button -->
@@ -869,6 +952,8 @@
         const instructionBox = document.getElementById('instructionBox');
         const toast = document.getElementById('toast');
         const toastMessage = document.getElementById('toastMessage');
+        const floatingTitle = document.getElementById('floatingTitle');
+        const floatingTitleText = document.getElementById('floatingTitleText');
 
         // State variables - initialize before use
         let sidebarOpen = false;
@@ -884,6 +969,20 @@
             setTimeout(function() {
                 toast.classList.remove('show');
             }, 2500);
+        }
+
+        // Show floating title
+        function showFloatingTitle(title) {
+            if (!floatingTitle || !floatingTitleText) return;
+            
+            floatingTitleText.textContent = title;
+            floatingTitle.classList.add('visible');
+        }
+
+        // Hide floating title
+        function hideFloatingTitle() {
+            if (!floatingTitle) return;
+            floatingTitle.classList.remove('visible');
         }
 
         // Update sidebar visibility state
@@ -934,6 +1033,9 @@
 
             sessionStorage.setItem('currentUrl', url);
             sessionStorage.setItem('currentTitle', title);
+
+            // Show floating title
+            showFloatingTitle(title);
         }
 
         // Restore state on page load
@@ -969,6 +1071,9 @@
                     contentArea.classList.remove('shifted');
                 }
                 if (contentFrame) contentFrame.src = savedUrl;
+
+                // Show floating title
+                showFloatingTitle(savedTitle);
             }
         }
 
