@@ -256,7 +256,7 @@
         .iframe-header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-end;
             padding: 1rem 1.5rem;
             background: rgba(0, 0, 0, 0.5);
             border-bottom: 1px solid var(--border);
@@ -459,9 +459,9 @@
         .nav-item:nth-child(1) .nav-icon { background: linear-gradient(135deg, #4ecdc4 0%, #3db8b0 100%); }
         .nav-item:nth-child(2) .nav-icon { background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%); }
         .nav-item:nth-child(3) .nav-icon { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%); }
-        .nav-item:nth-child(4) .nav-icon { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); } /* Warna baru untuk menu Selisih */
+        .nav-item:nth-child(4) .nav-icon { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); }
         .nav-item:nth-child(5) .nav-icon { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); }
-        .nav-item:nth-child(6) .nav-icon { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); } /* Warna sebelumnya untuk menu withdraw */
+        .nav-item:nth-child(6) .nav-icon { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
 
         .nav-item:hover .nav-icon {
             transform: scale(1.1) rotate(5deg);
@@ -831,18 +831,16 @@
                     </div>
                 </div>
 
-                <!-- Menu 4: Selisih Qris Vip (BARU) -->
+                <!-- Menu 4: Selisih Qris Vip -->
                 <div class="nav-item" data-url="https://bacoud97.vercel.app/selishqris-vip.html" data-title="Selisih Qris Vip">
                     <div class="nav-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="12" y1="20" x2="12" y2="10"/>
-                            <line x1="18" y1="20" x2="18" y2="4"/>
-                            <line x1="6" y1="20" x2="6" y2="16"/>
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
                         </svg>
                     </div>
                     <div class="nav-content">
                         <div class="nav-title">Selisih Qris Vip</div>
-                        <div class="nav-desc">Hitung selisih biaya QRIS</div>
+                        <div class="nav-desc">Kalkulator selisih QRIS VIP</div>
                     </div>
                     <div class="nav-arrow">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
