@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Tools Hub</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230a0a0f'/><path d='M25 30h50v8H25zM25 46h35v8H25zM25 62h45v8H25z' fill='%2300d4aa'/><circle cx='70' cy='50' r='12' fill='%2300d4aa' opacity='0.3'/></svg>" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --bg-secondary: #12121a;
+            --fg: #e8e8ed;
+            --muted: #6b6b7a;
+            --accent: #00d4aa;
+            --accent-glow: rgba(0, 212, 170, 0.3);
+            --card: rgba(24, 24, 32, 0.8);
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-pattern {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse 80% 50% at 80% 40%, rgba(0, 212, 170, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 20% 60%, rgba(120, 80, 200, 0.06) 0%, transparent 50%),
+                linear-gradient(180deg, var(--bg) 0%, var(--bg-secondary) 100%);
+        }
+
+        .grid-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 20%, transparent 70%);
+        }
+
+        /* Floating orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: float 20s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--accent);
+            top: -100px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: #7850c8;
+            bottom: -50px;
+            left: 20%;
+            animation-delay: -7s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        /* Main container */
+        .main-container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        /* Content area */
+        .content-area {
+            flex: 1;
+            padding: 2rem;
+            padding-left: 2rem;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+            margin-left: 0;
+        }
+
+        .content-area.shifted {
+            margin-left: 360px;
+            padding-left: 2rem;
+        }
+
+        .content-area.fullscreen {
+            padding: 0;
+            margin-left: 0;
+        }
+
+        /* Welcome screen */
+        .welcome-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .welcome-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--fg) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.125rem;
+            color: var(--muted);
+            max-width: 500px;
+            line-height: 1.7;
+        }
+
+        .welcome-icon {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 2rem;
+            background: var(--card);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 30px var(--accent-glow); }
+            50% { box-shadow: 0 0 60px var(--accent-glow); }
+        }
+
+        /* Instruction box */
+        .instruction-box {
+            margin-top: 2rem;
+            padding: 1.5rem 2rem;
+            background: rgba(0, 212, 170, 0.05);
+            border: 1px solid rgba(0, 212, 170, 0.2);
+            border-radius: 16px;
+            max-width: 400px;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .instruction-box h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .instruction-box p {
+            font-size: 0.875rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .instruction-box .shortcut {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--fg);
+            margin: 0 0.25rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* iframe container */
+        .iframe-container {
+            display: none;
+            flex-direction: column;
+            flex: 1;
+            background: var(--card);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .iframe-container.active {
+            display: flex;
+        }
+
+        .content-area.fullscreen .iframe-container {
+            border-radius: 0;
+            border: none;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .iframe-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 5;
+        }
+
+        .iframe-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .iframe-title::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: blink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .iframe-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .iframe-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            min-height: calc(100vh - 60px);
+        }
+
+        /* Loading state */
+        .loading-overlay {
+            position: absolute;
+            inset: 0;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 10;
+            transition: opacity 0.3s ease;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 360px;
+            background: rgba(18, 18, 26, 0.98);
+            border-right: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 60;
+        }
+
+        .sidebar.hidden {
+            transform: translateX(-100%);
+            pointer-events: none;
+        }
+
+        /* Sidebar header - padding diperbesar agar tidak tertimpa tombol hamburger */
+        .sidebar-header {
+            padding: 7.5rem 1.5rem 2rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+
+        .sidebar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--fg);
+            margin-bottom: 0.25rem;
+        }
+
+        .sidebar-tagline {
+            font-size: 0.8rem;
+            color: var(--muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-section-title {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            padding: 0 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.5rem;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--accent);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: var(--border);
+            transform: translateX(4px);
+        }
+
+        .nav-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .nav-item:active {
+            transform: translateX(2px) scale(0.98);
+        }
+
+        .nav-item.active {
+            background: rgba(0, 212, 170, 0.1);
+            border-color: var(--accent);
+        }
+
+        .nav-item.active::before {
+            transform: scaleY(1);
+        }
+
+        .nav-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Icon backgrounds for each menu item */
+        .nav-item:nth-child(1) .nav-icon { background: linear-gradient(135deg, #4ecdc4 0%, #3db8b0 100%); }
+        .nav-item:nth-child(2) .nav-icon { background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%); }
+        .nav-item:nth-child(3) .nav-icon { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%); }
+        .nav-item:nth-child(4) .nav-icon { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); }
+        .nav-item:nth-child(5) .nav-icon { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); }
+
+        .nav-item:hover .nav-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .nav-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .nav-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--fg);
+            margin-bottom: 0.15rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .nav-desc {
+            font-size: 0.75rem;
+            color: var(--muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .nav-arrow {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted);
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover .nav-arrow,
+        .nav-item.active .nav-arrow {
+            color: var(--accent);
+            transform: translateX(-4px);
+        }
+
+        /* Menu toggle button */
+        .menu-toggle {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            z-index: 100;
+            width: 52px;
+            height: 52px;
+            background: var(--accent);
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg);
+            box-shadow: 0 4px 20px var(--accent-glow);
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px var(--accent-glow);
+        }
+
+        .menu-toggle:active {
+            transform: scale(0.95);
+        }
+
+        .menu-toggle svg {
+            transition: transform 0.3s ease;
+        }
+
+        .menu-toggle.rotated svg {
+            transform: rotate(180deg);
+        }
+
+        .menu-toggle.hidden-btn {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.8);
+        }
+
+        .sidebar-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-info {
+            font-size: 0.75rem;
+            color: var(--muted);
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Overlay for mobile when sidebar open */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 50;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-overlay.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(0, 212, 170, 0.95);
+            color: var(--bg);
+            padding: 0.875rem 1.5rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            z-index: 200;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .content-area {
+                margin-left: 0 !important;
+                padding-left: 2rem !important;
+            }
+
+            .content-area.shifted {
+                margin-left: 0;
+            }
+
+            .sidebar {
+                width: 100%;
+                max-width: 360px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-area {
+                padding: 1rem;
+                padding-top: 7rem;
+                padding-left: 1rem !important;
+            }
+
+            .content-area.fullscreen {
+                padding: 0;
+            }
+
+            .iframe-header {
+                padding: 0.75rem 1rem;
+            }
+
+            .menu-toggle {
+                top: 1rem;
+                left: 1rem;
+                width: 46px;
+                height: 46px;
+            }
+
+            /* Pastikan header sidebar tetap di bawah tombol di mobile */
+            .sidebar-header {
+                padding: 6.5rem 1.25rem 1.5rem 1.25rem;
+            }
+
+            .instruction-box {
+                padding: 1rem 1.25rem;
+                margin: 1.5rem 1rem 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar-header {
+                padding: 6rem 1rem 1.5rem 1rem;
+            }
+
+            .sidebar-brand {
+                font-size: 1.25rem;
+            }
+
+            .sidebar-tagline {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background elements -->
+    <div class="bg-pattern"></div>
+    <div class="grid-overlay"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <!-- Sidebar overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Toast notification -->
+    <div class="toast" id="toast">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span id="toastMessage">Menu berhasil dimuat</span>
+    </div>
+
+    <!-- Menu toggle button -->
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu sidebar">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+
+    <div class="main-container">
+        <!-- Content area -->
+        <div class="content-area" id="contentArea">
+            <!-- Welcome screen -->
+            <div class="welcome-screen" id="welcomeScreen">
+                <div class="welcome-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent)">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="9" y1="3" x2="9" y2="21"></line>
+                    </svg>
+                </div>
+                <h1 class="welcome-title">Financial Tools Hub</h1>
+                <p class="welcome-subtitle">Pilih menu di sidebar kiri untuk mengakses berbagai tools perhitungan dan pencatatan keuangan Anda.</p>
+                
+                <!-- Instruction box -->
+                <div class="instruction-box" id="instructionBox">
+                    <h3>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        Cara Menggunakan
+                    </h3>
+                    <p>
+                        Sidebar di sebelah kiri berisi daftar tools yang tersedia. 
+                        Klik salah satu menu untuk membuka tools tersebut.
+                        <br><br>
+                        Untuk membuka sidebar, klik tombol <span class="shortcut">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="3" y1="12" x2="21" y2="12"></line>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <line x1="3" y1="18" x2="21" y2="18"></line>
+                            </svg>
+                        </span> di pojok kiri atas.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Iframe container -->
+            <div class="iframe-container" id="iframeContainer">
+                <div class="iframe-header">
+                    <span class="iframe-title" id="currentTitle">Loading...</span>
+                </div>
+                <div class="iframe-wrapper">
+                    <div class="loading-overlay" id="loadingOverlay">
+                        <div class="loader"></div>
+                        <span style="color: var(--muted); font-size: 0.875rem;">Memuat konten...</span>
+                    </div>
+                    <iframe id="contentFrame" src="" title="Content"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2 class="sidebar-brand">Menu Navigasi</h2>
+            <p class="sidebar-tagline">// pilih tools yang dibutuhkan</p>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Tools Tersedia</div>
+                
+                <!-- Menu 1: Hitung Biaya QRIS -->
+                <div class="nav-item" data-url="https://bacoud97.vercel.app/hitunganbiayaqris.html" data-title="Hitung Biaya QRIS">
+                    <div class="nav-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                            <line x1="1" y1="10" x2="23" y2="10"></line>
+                        </svg>
+                    </div>
+                    <div class="nav-content">
+                        <div class="nav-title">Hitung Biaya QRIS</div>
+                        <div class="nav-desc">Kalkulator biaya QRIS</div>
+                    </div>
+                    <div class="nav-arrow">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Menu 2: Hitung Biaya QRIS 2 -->
+                <div class="nav-item" data-url="https://shotcurtperiode.vercel.app/SHORTCUTBIAYAQRIS.html" data-title="Hitung Biaya QRIS 2">
+                    <div class="nav-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </div>
+                    <div class="nav-content">
+                        <div class="nav-title">Hitung Biaya QRIS 2</div>
+                        <div class="nav-desc">Versi alternatif kalkulator</div>
+                    </div>
+                    <div class="nav-arrow">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Menu 3: Pencatatan Buang Dana -->
+                <div class="nav-item" data-url="https://bacoud97.vercel.app/pencatatanbuangdana.html" data-title="Pencatatan Buang Dana">
+                    <div class="nav-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                        </svg>
+                    </div>
+                    <div class="nav-content">
+                        <div class="nav-title">Pencatatan Buang Dana</div>
+                        <div class="nav-desc">Catat pengeluaran dana</div>
+                    </div>
+                    <div class="nav-arrow">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Menu 4: Pemecahan Withdraw Besar -->
+                <div class="nav-item" data-url="https://proses-wd-by-qris-max-35-jt.vercel.app/35jt.html" data-title="Pemecahan Withdraw Besar">
+                    <div class="nav-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M8 12h8"></path>
+                            <path d="M12 8v8"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </div>
+                    <div class="nav-content">
+                        <div class="nav-title">Pemecahan Withdraw Besar</div>
+                        <div class="nav-desc">Max 35 Juta</div>
+                    </div>
+                    <div class="nav-arrow">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Menu 5: Pemecahan Withdraw Besar 2 -->
+                <div class="nav-item" data-url="https://project-lilac-three-79.vercel.app/WDBESAR.HTML" data-title="Pemecahan Withdraw Besar 2">
+                    <div class="nav-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 3v6h6"></path>
+                            <path d="M7 21v-6H1"></path>
+                            <path d="M17 3l-7 7"></path>
+                            <path d="M7 21l7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="nav-content">
+                        <div class="nav-title">Pemecahan Withdraw Besar 2</div>
+                        <div class="nav-desc">Versi alternatif</div>
+                    </div>
+                    <div class="nav-arrow">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <p class="footer-info">Financial Tools Hub v1.0</p>
+        </div>
+    </aside>
+
+    <script>
+        // Initialize elements first before any function calls
+        const navItems = document.querySelectorAll('.nav-item');
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const iframeContainer = document.getElementById('iframeContainer');
+        const contentFrame = document.getElementById('contentFrame');
+        const currentTitle = document.getElementById('currentTitle');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const sidebar = document.getElementById('sidebar');
+        const contentArea = document.getElementById('contentArea');
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const instructionBox = document.getElementById('instructionBox');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toastMessage');
+
+        // State variables - initialize before use
+        let sidebarOpen = false;
+        let hasSelectedMenu = false;
+
+        // Show toast notification
+        function showToast(message) {
+            if (!toast || !toastMessage) return;
+            
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(function() {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        // Update sidebar visibility state
+        function updateSidebarState(isOpen) {
+            if (!sidebar || !sidebarOverlay || !menuToggle) return;
+            
+            if (isOpen) {
+                sidebar.classList.remove('hidden');
+                sidebarOverlay.classList.add('visible');
+                menuToggle.classList.remove('rotated');
+                menuToggle.classList.remove('hidden-btn');
+            } else {
+                sidebar.classList.add('hidden');
+                sidebarOverlay.classList.remove('visible');
+                menuToggle.classList.add('rotated');
+                menuToggle.classList.remove('hidden-btn');
+            }
+            
+            sessionStorage.setItem('sidebarOpen', String(isOpen));
+        }
+
+        // Toggle sidebar function
+        function toggleSidebar() {
+            sidebarOpen = !sidebarOpen;
+            updateSidebarState(sidebarOpen);
+        }
+
+        // Close sidebar function
+        function closeSidebar() {
+            if (sidebarOpen) {
+                sidebarOpen = false;
+                updateSidebarState(false);
+            }
+        }
+
+        // Load content function
+        function loadContent(url, title) {
+            if (!loadingOverlay || !currentTitle || !welcomeScreen || !iframeContainer || !contentArea || !contentFrame) return;
+            
+            loadingOverlay.classList.remove('hidden');
+            currentTitle.textContent = title;
+
+            welcomeScreen.style.display = 'none';
+            iframeContainer.classList.add('active');
+            contentArea.classList.add('fullscreen');
+            contentArea.classList.remove('shifted');
+
+            contentFrame.src = url;
+
+            sessionStorage.setItem('currentUrl', url);
+            sessionStorage.setItem('currentTitle', title);
+        }
+
+        // Restore state on page load
+        function restoreState() {
+            const savedUrl = sessionStorage.getItem('currentUrl');
+            const savedTitle = sessionStorage.getItem('currentTitle');
+            const savedSidebarOpen = sessionStorage.getItem('sidebarOpen');
+
+            // Restore sidebar state - default to CLOSED
+            if (savedSidebarOpen !== null) {
+                sidebarOpen = savedSidebarOpen === 'true';
+            } else {
+                sidebarOpen = false;
+            }
+
+            // Apply sidebar state
+            updateSidebarState(sidebarOpen);
+
+            // Restore content state
+            if (savedUrl && savedTitle) {
+                hasSelectedMenu = true;
+                
+                navItems.forEach(function(item) {
+                    if (item.dataset.url === savedUrl) {
+                        item.classList.add('active');
+                    }
+                });
+
+                if (welcomeScreen) welcomeScreen.style.display = 'none';
+                if (iframeContainer) iframeContainer.classList.add('active');
+                if (contentArea) {
+                    contentArea.classList.add('fullscreen');
+                    contentArea.classList.remove('shifted');
+                }
+                if (currentTitle) currentTitle.textContent = savedTitle;
+                if (contentFrame) contentFrame.src = savedUrl;
+            }
+        }
+
+        // Menu toggle button click
+        if (menuToggle) {
+            menuToggle.addEventListener('click', function() {
+                toggleSidebar();
+            });
+        }
+
+        // Overlay click to close sidebar
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener('click', function() {
+                closeSidebar();
+            });
+        }
+
+        // Nav item click handler
+        navItems.forEach(function(item) {
+            item.addEventListener('click', function() {
+                const url = this.dataset.url;
+                const title = this.dataset.title;
+
+                navItems.forEach(function(nav) {
+                    nav.classList.remove('active');
+                });
+                this.classList.add('active');
+
+                loadContent(url, title);
+                hasSelectedMenu = true;
+
+                showToast('Membuka ' + title + '...');
+
+                // Close sidebar after selection
+                setTimeout(function() {
+                    closeSidebar();
+                }, 400);
+            });
+        });
+
+        // Iframe load handler
+        if (contentFrame) {
+            contentFrame.addEventListener('load', function() {
+                if (contentFrame.src && loadingOverlay) {
+                    loadingOverlay.classList.add('hidden');
+                }
+            });
+        }
+
+        // Call restore state after all setup is done
+        restoreState();
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (sidebarOpen && sidebarOverlay) {
+                sidebarOverlay.classList.add('visible');
+            }
+        });
+
+        // Keyboard navigation for nav items
+        navItems.forEach(function(item) {
+            item.setAttribute('tabindex', '0');
+            item.setAttribute('role', 'button');
+            
+            const titleElement = item.querySelector('.nav-title');
+            if (titleElement) {
+                item.setAttribute('aria-label', titleElement.textContent);
+            }
+            
+            item.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        });
+
+        // Keyboard navigation for menu toggle
+        if (menuToggle) {
+            menuToggle.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        }
+
+        // Escape key to close sidebar
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && sidebarOpen) {
+                closeSidebar();
+            }
+        });
+    </script>
+</body>
+</html>
