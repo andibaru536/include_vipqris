@@ -253,42 +253,6 @@
             }
         }
 
-        .iframe-header {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding: 1rem 1.5rem;
-            background: rgba(0, 0, 0, 0.5);
-            border-bottom: 1px solid var(--border);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 5;
-        }
-
-        .iframe-title {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.875rem;
-            color: var(--accent);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .iframe-title::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: var(--accent);
-            border-radius: 50%;
-            animation: blink 1.5s ease-in-out infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
         .iframe-wrapper {
             flex: 1;
             position: relative;
@@ -298,7 +262,7 @@
             width: 100%;
             height: 100%;
             border: none;
-            min-height: calc(100vh - 60px);
+            min-height: 100vh;
         }
 
         /* Loading state */
@@ -631,10 +595,6 @@
                 padding: 0;
             }
 
-            .iframe-header {
-                padding: 0.75rem 1rem;
-            }
-
             .menu-toggle {
                 top: 1rem;
                 left: 1rem;
@@ -745,9 +705,6 @@
 
             <!-- Iframe container -->
             <div class="iframe-container" id="iframeContainer">
-                <div class="iframe-header">
-                    <span class="iframe-title" id="currentTitle">Loading...</span>
-                </div>
                 <div class="iframe-wrapper">
                     <div class="loading-overlay" id="loadingOverlay">
                         <div class="loader"></div>
@@ -904,7 +861,6 @@
         const welcomeScreen = document.getElementById('welcomeScreen');
         const iframeContainer = document.getElementById('iframeContainer');
         const contentFrame = document.getElementById('contentFrame');
-        const currentTitle = document.getElementById('currentTitle');
         const loadingOverlay = document.getElementById('loadingOverlay');
         const sidebar = document.getElementById('sidebar');
         const contentArea = document.getElementById('contentArea');
@@ -965,10 +921,9 @@
 
         // Load content function
         function loadContent(url, title) {
-            if (!loadingOverlay || !currentTitle || !welcomeScreen || !iframeContainer || !contentArea || !contentFrame) return;
+            if (!loadingOverlay || !welcomeScreen || !iframeContainer || !contentArea || !contentFrame) return;
             
             loadingOverlay.classList.remove('hidden');
-            currentTitle.textContent = title;
 
             welcomeScreen.style.display = 'none';
             iframeContainer.classList.add('active');
@@ -1013,7 +968,6 @@
                     contentArea.classList.add('fullscreen');
                     contentArea.classList.remove('shifted');
                 }
-                if (currentTitle) currentTitle.textContent = savedTitle;
                 if (contentFrame) contentFrame.src = savedUrl;
             }
         }
