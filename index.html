@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Tools Hub</title>
+    <title>Include Shorcut Qris</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230a0a0f'/><path d='M25 30h50v8H25zM25 46h35v8H25zM25 62h45v8H25z' fill='%2300d4aa'/><circle cx='70' cy='50' r='12' fill='%2300d4aa' opacity='0.3'/></svg>" type="image/svg+xml">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -459,8 +459,9 @@
         .nav-item:nth-child(1) .nav-icon { background: linear-gradient(135deg, #4ecdc4 0%, #3db8b0 100%); }
         .nav-item:nth-child(2) .nav-icon { background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%); }
         .nav-item:nth-child(3) .nav-icon { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%); }
-        .nav-item:nth-child(4) .nav-icon { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); }
+        .nav-item:nth-child(4) .nav-icon { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); } /* Warna baru untuk menu Selisih */
         .nav-item:nth-child(5) .nav-icon { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); }
+        .nav-item:nth-child(6) .nav-icon { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); } /* Warna sebelumnya untuk menu withdraw */
 
         .nav-item:hover .nav-icon {
             transform: scale(1.1) rotate(5deg);
@@ -714,7 +715,7 @@
                         <line x1="9" y1="3" x2="9" y2="21"></line>
                     </svg>
                 </div>
-                <h1 class="welcome-title">Financial Tools Hub</h1>
+                <h1 class="welcome-title">Include Shorcut Qris</h1>
                 <p class="welcome-subtitle">Pilih menu di sidebar kiri untuk mengakses berbagai tools perhitungan dan pencatatan keuangan Anda.</p>
                 
                 <!-- Instruction box -->
@@ -830,7 +831,27 @@
                     </div>
                 </div>
 
-                <!-- Menu 4: Pemecahan Withdraw Besar -->
+                <!-- Menu 4: Selisih Qris Vip (BARU) -->
+                <div class="nav-item" data-url="https://bacoud97.vercel.app/selishqris-vip.html" data-title="Selisih Qris Vip">
+                    <div class="nav-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="20" x2="12" y2="10"/>
+                            <line x1="18" y1="20" x2="18" y2="4"/>
+                            <line x1="6" y1="20" x2="6" y2="16"/>
+                        </svg>
+                    </div>
+                    <div class="nav-content">
+                        <div class="nav-title">Selisih Qris Vip</div>
+                        <div class="nav-desc">Hitung selisih biaya QRIS</div>
+                    </div>
+                    <div class="nav-arrow">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Menu 5: Pemecahan Withdraw Besar -->
                 <div class="nav-item" data-url="https://proses-wd-by-qris-max-35-jt.vercel.app/35jt.html" data-title="Pemecahan Withdraw Besar">
                     <div class="nav-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -851,7 +872,7 @@
                     </div>
                 </div>
 
-                <!-- Menu 5: Pemecahan Withdraw Besar 2 -->
+                <!-- Menu 6: Pemecahan Withdraw Besar 2 -->
                 <div class="nav-item" data-url="https://project-lilac-three-79.vercel.app/WDBESAR.HTML" data-title="Pemecahan Withdraw Besar 2">
                     <div class="nav-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -875,7 +896,7 @@
         </nav>
 
         <div class="sidebar-footer">
-            <p class="footer-info">Financial Tools Hub v1.0</p>
+            <p class="footer-info">Include Shorcut Qris v1.0</p>
         </div>
     </aside>
 
@@ -1091,4 +1112,5 @@
         });
     </script>
 </body>
+
 </html>
