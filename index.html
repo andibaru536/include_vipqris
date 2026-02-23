@@ -565,7 +565,7 @@
             pointer-events: none;
         }
 
-        /* Sidebar header - padding diperbesar agar tidak tertimpa tombol hamburger */
+        /* Sidebar header */
         .sidebar-header {
             padding: 7.5rem 1.5rem 2rem 1.5rem;
             border-bottom: 1px solid var(--border);
@@ -667,12 +667,16 @@
         }
 
         /* Icon backgrounds for each menu item */
-        .nav-item:nth-child(1) .nav-icon { background: linear-gradient(135deg, #4ecdc4 0%, #3db8b0 100%); }
-        .nav-item:nth-child(2) .nav-icon { background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%); }
-        .nav-item:nth-child(3) .nav-icon { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%); }
-        .nav-item:nth-child(4) .nav-icon { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); }
-        .nav-item:nth-child(5) .nav-icon { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); }
-        .nav-item:nth-child(6) .nav-icon { background: linear-gradient(135-gradient, #10b981 0%, #059669 100%); }
+        /* Home button */
+        .nav-item-home .nav-icon { background: linear-gradient(135deg, #00d4aa 0%, #00b894 100%); }
+
+        /* Tools */
+        .nav-section-tools .nav-item:nth-child(1) .nav-icon { background: linear-gradient(135deg, #4ecdc4 0%, #3db8b0 100%); }
+        .nav-section-tools .nav-item:nth-child(2) .nav-icon { background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%); }
+        .nav-section-tools .nav-item:nth-child(3) .nav-icon { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%); }
+        .nav-section-tools .nav-item:nth-child(4) .nav-icon { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); }
+        .nav-section-tools .nav-item:nth-child(5) .nav-icon { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); }
+        .nav-section-tools .nav-item:nth-child(6) .nav-icon { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
 
         .nav-item:hover .nav-icon {
             transform: scale(1.1) rotate(5deg);
@@ -899,7 +903,6 @@
                 font-size: 1.25rem;
             }
 
-            /* Pastikan header sidebar tetap di bawah tombol di mobile */
             .sidebar-header {
                 padding: 6.5rem 1.25rem 1.5rem 1.25rem;
             }
@@ -1106,7 +1109,32 @@
         </div>
         
         <nav class="sidebar-nav">
+            <!-- Navigation Section -->
             <div class="nav-section">
+                <div class="nav-section-title">Navigasi</div>
+                
+                <!-- Menu Utama -->
+                <div class="nav-item nav-item-home" data-action="home" data-title="Menu Utama">
+                    <div class="nav-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                    </div>
+                    <div class="nav-content">
+                        <div class="nav-title">Menu Utama</div>
+                        <div class="nav-desc">Kembali ke beranda</div>
+                    </div>
+                    <div class="nav-arrow">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tools Section -->
+            <div class="nav-section nav-section-tools">
                 <div class="nav-section-title">Tools Tersedia</div>
                 
                 <!-- Menu 1: Hitung Biaya QRIS -->
@@ -1322,10 +1350,37 @@
             sidebarOpen = true;
             updateSidebarState(true);
             
-            // Highlight and click the nav item
-            if (navItems[index]) {
-                navItems[index].click();
+            // Get only tool items (not home)
+            const toolItems = document.querySelectorAll('.nav-section-tools .nav-item');
+            
+            if (toolItems[index]) {
+                toolItems[index].click();
             }
+        }
+
+        // Go to home screen
+        function goToHome() {
+            if (welcomeScreen) welcomeScreen.style.display = 'flex';
+            if (iframeContainer) iframeContainer.classList.remove('active');
+            if (contentArea) {
+                contentArea.classList.remove('fullscreen');
+                contentArea.classList.remove('shifted');
+            }
+            if (contentFrame) contentFrame.src = '';
+            
+            sessionStorage.removeItem('currentUrl');
+            sessionStorage.removeItem('currentTitle');
+            hideFloatingTitle();
+            hasSelectedMenu = false;
+
+            // Update active states
+            navItems.forEach(function(nav) {
+                nav.classList.remove('active');
+            });
+            
+            // Set home as active
+            const homeItem = document.querySelector('.nav-item-home');
+            if (homeItem) homeItem.classList.add('active');
         }
 
         // Load content function
@@ -1364,13 +1419,19 @@
             // Apply sidebar state
             updateSidebarState(sidebarOpen);
 
+            // Set home as active by default
+            const homeItem = document.querySelector('.nav-item-home');
+            if (homeItem) homeItem.classList.add('active');
+
             // Restore content state
             if (savedUrl && savedTitle) {
                 hasSelectedMenu = true;
                 
-                navItems.forEach(function(item) {
+                const toolItems = document.querySelectorAll('.nav-section-tools .nav-item');
+                toolItems.forEach(function(item) {
                     if (item.dataset.url === savedUrl) {
                         item.classList.add('active');
+                        if (homeItem) homeItem.classList.remove('active');
                     }
                 });
 
@@ -1411,23 +1472,35 @@
         // Nav item click handler
         navItems.forEach(function(item) {
             item.addEventListener('click', function() {
+                const action = this.dataset.action;
                 const url = this.dataset.url;
                 const title = this.dataset.title;
 
-                navItems.forEach(function(nav) {
-                    nav.classList.remove('active');
-                });
-                this.classList.add('active');
-
-                loadContent(url, title);
-                hasSelectedMenu = true;
-
-                showToast('Membuka ' + title + '...');
-
-                // Close sidebar after selection
-                setTimeout(function() {
+                // Handle Home button
+                if (action === 'home') {
+                    goToHome();
+                    showToast('Kembali ke menu utama');
                     closeSidebar();
-                }, 400);
+                    return;
+                }
+
+                // Handle tool items
+                if (url) {
+                    navItems.forEach(function(nav) {
+                        nav.classList.remove('active');
+                    });
+                    this.classList.add('active');
+
+                    loadContent(url, title);
+                    hasSelectedMenu = true;
+
+                    showToast('Membuka ' + title + '...');
+
+                    // Close sidebar after selection
+                    setTimeout(function() {
+                        closeSidebar();
+                    }, 400);
+                }
             });
         });
 
