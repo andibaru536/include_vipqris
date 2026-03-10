@@ -250,7 +250,7 @@
 
         .welcome-cards {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 1rem;
             margin-bottom: 2.5rem;
             animation: fadeInUp 0.6s ease 0.3s forwards;
@@ -284,7 +284,7 @@
         .welcome-card:nth-child(1) { --card-accent: #4ecdc4; }
         .welcome-card:nth-child(2) { --card-accent: #a78bfa; }
         .welcome-card:nth-child(3) { --card-accent: #ff6b6b; }
-        .welcome-card:nth-child(4) { --card-accent: #f59e0b; }
+        .welcome-card:nth-child(4) { --card-accent: #ec4899; }
         .welcome-card:nth-child(5) { --card-accent: #f97316; }
         .welcome-card:nth-child(6) { --card-accent: #06b6d4; }
         .welcome-card:nth-child(7) { --card-accent: #10b981; }
@@ -317,7 +317,7 @@
         .welcome-card:nth-child(1) .welcome-card-icon { background: linear-gradient(135deg, #4ecdc4, #3db8b0); }
         .welcome-card:nth-child(2) .welcome-card-icon { background: linear-gradient(135deg, #a78bfa, #8b5cf6); }
         .welcome-card:nth-child(3) .welcome-card-icon { background: linear-gradient(135deg, #ff6b6b, #ee5a5a); }
-        .welcome-card:nth-child(4) .welcome-card-icon { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .welcome-card:nth-child(4) .welcome-card-icon { background: linear-gradient(135deg, #ec4899, #db2777); }
         .welcome-card:nth-child(5) .welcome-card-icon { background: linear-gradient(135deg, #f97316, #ea580c); }
         .welcome-card:nth-child(6) .welcome-card-icon { background: linear-gradient(135deg, #06b6d4, #0891b2); }
         .welcome-card:nth-child(7) .welcome-card-icon { background: linear-gradient(135deg, #10b981, #059669); }
@@ -406,6 +406,11 @@
         @keyframes float-decoration {
             0%, 100% { transform: translate(0, 0); }
             50% { transform: translate(20px, -20px); }
+        }
+
+        /* Instruction box - simplified */
+        .instruction-box {
+            display: none;
         }
 
         /* iframe container */
@@ -671,11 +676,11 @@
         /* Home button */
         .nav-item-home .nav-icon { background: linear-gradient(135deg, #00d4aa 0%, #00b894 100%); }
 
-        /* Tools - updated to 7 items */
+        /* Tools */
         .nav-section-tools .nav-item:nth-child(1) .nav-icon { background: linear-gradient(135deg, #4ecdc4 0%, #3db8b0 100%); }
         .nav-section-tools .nav-item:nth-child(2) .nav-icon { background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%); }
         .nav-section-tools .nav-item:nth-child(3) .nav-icon { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%); }
-        .nav-section-tools .nav-item:nth-child(4) .nav-icon { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+        .nav-section-tools .nav-item:nth-child(4) .nav-icon { background: linear-gradient(135deg, #ec4899 0%, #db2777 100%); }
         .nav-section-tools .nav-item:nth-child(5) .nav-icon { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); }
         .nav-section-tools .nav-item:nth-child(6) .nav-icon { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); }
         .nav-section-tools .nav-item:nth-child(7) .nav-icon { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
@@ -1014,7 +1019,7 @@
                         Kumpulan tools perhitungan dan pencatatan yang lengkap untuk memudahkan kerjaan anda.
                     </p>
 
-                    <!-- Stats bar - updated to 7 tools -->
+                    <!-- Stats bar -->
                     <div class="stats-bar">
                         <div class="stat-item">
                             <div class="stat-value">7</div>
@@ -1030,7 +1035,7 @@
                         </div>
                     </div>
 
-                    <!-- Feature cards - ALL 7 TOOLS with correct indices -->
+                    <!-- Feature cards - ALL 7 TOOLS -->
                     <div class="welcome-cards">
                         <!-- Tool 1: Hitung Biaya QRIS -->
                         <div class="welcome-card" onclick="openSidebarAndHighlight(0)">
@@ -1071,23 +1076,21 @@
                             <div class="welcome-card-title">Pencatatan</div>
                             <div class="welcome-card-desc">Catat dana</div>
                         </div>
-
-                        <!-- NEW Tool 4: Report Pimjan Dana (position 4) -->
+                        
+                        <!-- Tool 4: Report Pimjan Dana - NEW -->
                         <div class="welcome-card" onclick="openSidebarAndHighlight(3)">
                             <div class="welcome-card-icon">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                    <polyline points="14 2 14 8 20 8"></polyline>
-                                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                                    <circle cx="18" cy="6" r="2" fill="white"/>
+                                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                                    <line x1="6" y1="20" x2="6" y2="14"></line>
                                 </svg>
                             </div>
-                            <div class="welcome-card-title">Report Pimjan Dana</div>
-                            <div class="welcome-card-desc">Laporan keuangan</div>
+                            <div class="welcome-card-title">Report Pimjan</div>
+                            <div class="welcome-card-desc">Laporan dana</div>
                         </div>
                         
-                        <!-- Tool 5: Selisih Qris Vip (was index 3, now 4) -->
+                        <!-- Tool 5: Selisih Qris Vip -->
                         <div class="welcome-card" onclick="openSidebarAndHighlight(4)">
                             <div class="welcome-card-icon">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1098,7 +1101,7 @@
                             <div class="welcome-card-desc">QRIS VIP</div>
                         </div>
                         
-                        <!-- Tool 6: Pemecahan Withdraw Besar (was index 4, now 5) -->
+                        <!-- Tool 6: Pemecahan Withdraw Besar -->
                         <div class="welcome-card" onclick="openSidebarAndHighlight(5)">
                             <div class="welcome-card-icon">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1111,7 +1114,7 @@
                             <div class="welcome-card-desc">Max 35 Juta</div>
                         </div>
                         
-                        <!-- Tool 7: Pemecahan Withdraw Besar 2 (was index 5, now 6) -->
+                        <!-- Tool 7: Pemecahan Withdraw Besar 2 -->
                         <div class="welcome-card" onclick="openSidebarAndHighlight(6)">
                             <div class="welcome-card-icon">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1180,7 +1183,7 @@
                 </div>
             </div>
 
-            <!-- Tools Section - updated to 7 items -->
+            <!-- Tools Section -->
             <div class="nav-section nav-section-tools">
                 <div class="nav-section-title">Tools Tersedia</div>
                 
@@ -1245,20 +1248,18 @@
                     </div>
                 </div>
 
-                <!-- NEW Menu 4: Report Pimjan Dana (position 4) -->
-                <div class="nav-item" data-url="#" data-title="Report Pimjan Dana">
+                <!-- Menu 4: Report Pimjan Dana - NEW -->
+                <div class="nav-item" data-url="https://bacoud97.vercel.app/peminjaman&pengembalian.html" data-title="Report Pimjan Dana">
                     <div class="nav-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="16" y1="13" x2="8" y2="13"></line>
-                            <line x1="16" y1="17" x2="8" y2="17"></line>
-                            <circle cx="18" cy="6" r="2" fill="white"/>
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
                         </svg>
                     </div>
                     <div class="nav-content">
                         <div class="nav-title">Report Pimjan Dana</div>
-                        <div class="nav-desc">Laporan keuangan</div>
+                        <div class="nav-desc">Laporan dana periodik</div>
                     </div>
                     <div class="nav-arrow">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1267,7 +1268,7 @@
                     </div>
                 </div>
 
-                <!-- Menu 5: Selisih Qris Vip (was 4, now 5) -->
+                <!-- Menu 5: Selisih Qris Vip -->
                 <div class="nav-item" data-url="https://bacoud97.vercel.app/selishqris-vip.html" data-title="Selisih Qris Vip">
                     <div class="nav-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1285,7 +1286,7 @@
                     </div>
                 </div>
 
-                <!-- Menu 6: Pemecahan Withdraw Besar (was 5, now 6) -->
+                <!-- Menu 6: Pemecahan Withdraw Besar -->
                 <div class="nav-item" data-url="https://proses-wd-by-qris-max-35-jt.vercel.app/35jt.html" data-title="Pemecahan Withdraw Besar">
                     <div class="nav-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1305,7 +1306,7 @@
                     </div>
                 </div>
 
-                <!-- Menu 7: Pemecahan Withdraw Besar 2 (was 6, now 7) -->
+                <!-- Menu 7: Pemecahan Withdraw Besar 2 -->
                 <div class="nav-item" data-url="https://project-lilac-three-79.vercel.app/WDBESAR.HTML" data-title="Pemecahan Withdraw Besar 2">
                     <div class="nav-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
