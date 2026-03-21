@@ -250,7 +250,7 @@
 
         .welcome-cards {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 1rem;
             margin-bottom: 2.5rem;
             animation: fadeInUp 0.6s ease 0.3s forwards;
@@ -288,6 +288,7 @@
         .welcome-card:nth-child(5) { --card-accent: #f97316; }
         .welcome-card:nth-child(6) { --card-accent: #06b6d4; }
         .welcome-card:nth-child(7) { --card-accent: #10b981; }
+        .welcome-card:nth-child(8) { --card-accent: #8b5cf6; }
 
         .welcome-card:hover {
             background: rgba(255, 255, 255, 0.06);
@@ -321,6 +322,7 @@
         .welcome-card:nth-child(5) .welcome-card-icon { background: linear-gradient(135deg, #f97316, #ea580c); }
         .welcome-card:nth-child(6) .welcome-card-icon { background: linear-gradient(135deg, #06b6d4, #0891b2); }
         .welcome-card:nth-child(7) .welcome-card-icon { background: linear-gradient(135deg, #10b981, #059669); }
+        .welcome-card:nth-child(8) .welcome-card-icon { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
 
         .welcome-card-title {
             font-size: 0.875rem;
@@ -684,6 +686,7 @@
         .nav-section-tools .nav-item:nth-child(5) .nav-icon { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); }
         .nav-section-tools .nav-item:nth-child(6) .nav-icon { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); }
         .nav-section-tools .nav-item:nth-child(7) .nav-icon { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        .nav-section-tools .nav-item:nth-child(8) .nav-icon { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); }
 
         .nav-item:hover .nav-icon {
             transform: scale(1.1) rotate(5deg);
@@ -856,6 +859,12 @@
         }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .welcome-cards {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
         @media (max-width: 900px) {
             .content-area {
                 margin-left: 0 !important;
@@ -869,6 +878,10 @@
             .sidebar {
                 width: 100%;
                 max-width: 360px;
+            }
+
+            .welcome-cards {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -1022,7 +1035,7 @@
                     <!-- Stats bar -->
                     <div class="stats-bar">
                         <div class="stat-item">
-                            <div class="stat-value">7</div>
+                            <div class="stat-value">8</div>
                             <div class="stat-label">Tools</div>
                         </div>
                         <div class="stat-item">
@@ -1035,7 +1048,7 @@
                         </div>
                     </div>
 
-                    <!-- Feature cards - ALL 7 TOOLS -->
+                    <!-- Feature cards - ALL 8 TOOLS -->
                     <div class="welcome-cards">
                         <!-- Tool 1: Hitung Biaya QRIS -->
                         <div class="welcome-card" onclick="openSidebarAndHighlight(0)">
@@ -1077,7 +1090,7 @@
                             <div class="welcome-card-desc">Catat dana</div>
                         </div>
                         
-                        <!-- Tool 4: Report Pimjan Dana - NEW -->
+                        <!-- Tool 4: Report Pimjan Dana -->
                         <div class="welcome-card" onclick="openSidebarAndHighlight(3)">
                             <div class="welcome-card-icon">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1125,6 +1138,18 @@
                             </div>
                             <div class="welcome-card-title">WD Besar 2</div>
                             <div class="welcome-card-desc">Versi alternatif</div>
+                        </div>
+
+                        <!-- Tool 8: Total Validasi - NEW -->
+                        <div class="welcome-card" onclick="openSidebarAndHighlight(7)">
+                            <div class="welcome-card-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                            <div class="welcome-card-title">Total Validasi</div>
+                            <div class="welcome-card-desc">Validasi data</div>
                         </div>
                     </div>
 
@@ -1248,7 +1273,7 @@
                     </div>
                 </div>
 
-                <!-- Menu 4: Report Pimjan Dana - NEW -->
+                <!-- Menu 4: Report Pimjan Dana -->
                 <div class="nav-item" data-url="https://bacoud97.vercel.app/peminjaman&pengembalian.html" data-title="Report Pimjan Dana">
                     <div class="nav-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1318,6 +1343,25 @@
                     <div class="nav-content">
                         <div class="nav-title">Pemecahan Withdraw Besar 2</div>
                         <div class="nav-desc">Versi alternatif</div>
+                    </div>
+                    <div class="nav-arrow">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Menu 8: Total Validasi - NEW -->
+                <div class="nav-item" data-url="https://bacoud97.vercel.app/total_validasi.html" data-title="Total Validasi">
+                    <div class="nav-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                    <div class="nav-content">
+                        <div class="nav-title">Total Validasi</div>
+                        <div class="nav-desc">Validasi data transaksi</div>
                     </div>
                     <div class="nav-arrow">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
