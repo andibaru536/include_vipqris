@@ -122,7 +122,7 @@
             margin-left: 0;
         }
 
-        /* Welcome screen - NEW DESIGN */
+        /* Welcome screen */
         .welcome-screen {
             flex: 1;
             display: flex;
@@ -166,7 +166,7 @@
             position: relative;
             z-index: 1;
             text-align: center;
-            max-width: 900px;
+            max-width: 1000px;
             width: 100%;
         }
 
@@ -250,11 +250,14 @@
 
         .welcome-cards {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 1rem;
             margin-bottom: 2.5rem;
             animation: fadeInUp 0.6s ease 0.3s forwards;
             opacity: 0;
+            max-width: 950px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .welcome-card {
@@ -289,6 +292,7 @@
         .welcome-card:nth-child(6) { --card-accent: #06b6d4; }
         .welcome-card:nth-child(7) { --card-accent: #10b981; }
         .welcome-card:nth-child(8) { --card-accent: #8b5cf6; }
+        .welcome-card:nth-child(9) { --card-accent: #f59e0b; }
 
         .welcome-card:hover {
             background: rgba(255, 255, 255, 0.06);
@@ -323,6 +327,7 @@
         .welcome-card:nth-child(6) .welcome-card-icon { background: linear-gradient(135deg, #06b6d4, #0891b2); }
         .welcome-card:nth-child(7) .welcome-card-icon { background: linear-gradient(135deg, #10b981, #059669); }
         .welcome-card:nth-child(8) .welcome-card-icon { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .welcome-card:nth-child(9) .welcome-card-icon { background: linear-gradient(135deg, #f59e0b, #d97706); }
 
         .welcome-card-title {
             font-size: 0.875rem;
@@ -408,11 +413,6 @@
         @keyframes float-decoration {
             0%, 100% { transform: translate(0, 0); }
             50% { transform: translate(20px, -20px); }
-        }
-
-        /* Instruction box - simplified */
-        .instruction-box {
-            display: none;
         }
 
         /* iframe container */
@@ -675,10 +675,8 @@
         }
 
         /* Icon backgrounds for each menu item */
-        /* Home button */
         .nav-item-home .nav-icon { background: linear-gradient(135deg, #00d4aa 0%, #00b894 100%); }
 
-        /* Tools */
         .nav-section-tools .nav-item:nth-child(1) .nav-icon { background: linear-gradient(135deg, #4ecdc4 0%, #3db8b0 100%); }
         .nav-section-tools .nav-item:nth-child(2) .nav-icon { background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%); }
         .nav-section-tools .nav-item:nth-child(3) .nav-icon { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%); }
@@ -687,6 +685,7 @@
         .nav-section-tools .nav-item:nth-child(6) .nav-icon { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); }
         .nav-section-tools .nav-item:nth-child(7) .nav-icon { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
         .nav-section-tools .nav-item:nth-child(8) .nav-icon { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); }
+        .nav-section-tools .nav-item:nth-child(9) .nav-icon { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
 
         .nav-item:hover .nav-icon {
             transform: scale(1.1) rotate(5deg);
@@ -861,7 +860,7 @@
         /* Responsive */
         @media (max-width: 1024px) {
             .welcome-cards {
-                grid-template-columns: repeat(4, 1fr);
+                grid-template-columns: repeat(3, 1fr);
             }
         }
 
@@ -1035,7 +1034,7 @@
                     <!-- Stats bar -->
                     <div class="stats-bar">
                         <div class="stat-item">
-                            <div class="stat-value">8</div>
+                            <div class="stat-value">9</div>
                             <div class="stat-label">Tools</div>
                         </div>
                         <div class="stat-item">
@@ -1048,7 +1047,7 @@
                         </div>
                     </div>
 
-                    <!-- Feature cards - ALL 8 TOOLS -->
+                    <!-- Feature cards - ALL 9 TOOLS -->
                     <div class="welcome-cards">
                         <!-- Tool 1: Hitung Biaya QRIS -->
                         <div class="welcome-card" onclick="openSidebarAndHighlight(0)">
@@ -1114,8 +1113,20 @@
                             <div class="welcome-card-desc">QRIS VIP</div>
                         </div>
                         
-                        <!-- Tool 6: Pemecahan Withdraw Besar -->
+                        <!-- Tool 6: Pemecah WD -->
                         <div class="welcome-card" onclick="openSidebarAndHighlight(5)">
+                            <div class="welcome-card-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+                                    <path d="M21 3v5h-5"></path>
+                                </svg>
+                            </div>
+                            <div class="welcome-card-title">Pemecah WD</div>
+                            <div class="welcome-card-desc">Pemecahan withdraw</div>
+                        </div>
+                        
+                        <!-- Tool 7: Pemecahan Withdraw Besar -->
+                        <div class="welcome-card" onclick="openSidebarAndHighlight(6)">
                             <div class="welcome-card-icon">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <circle cx="12" cy="12" r="10"></circle>
@@ -1127,21 +1138,20 @@
                             <div class="welcome-card-desc">Max 35 Juta</div>
                         </div>
                         
-                        <!-- Tool 7: Pemecahan Withdraw Besar 2 -->
-                        <div class="welcome-card" onclick="openSidebarAndHighlight(6)">
+                        <!-- Tool 8: Pemecahan Withdraw Besar 2 -->
+                        <div class="welcome-card" onclick="openSidebarAndHighlight(7)">
                             <div class="welcome-card-icon">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
-                                    <path d="M21 3v5h-5"></path>
-                                    <path d="M12 7v5l3 3"></path>
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
                                 </svg>
                             </div>
                             <div class="welcome-card-title">WD Besar 2</div>
                             <div class="welcome-card-desc">Versi alternatif</div>
                         </div>
 
-                        <!-- Tool 8: Total Validasi - NEW -->
-                        <div class="welcome-card" onclick="openSidebarAndHighlight(7)">
+                        <!-- Tool 9: Total Validasi -->
+                        <div class="welcome-card" onclick="openSidebarAndHighlight(8)">
                             <div class="welcome-card-icon">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
@@ -1311,7 +1321,26 @@
                     </div>
                 </div>
 
-                <!-- Menu 6: Pemecahan Withdraw Besar -->
+                <!-- Menu 6: Pemecah WD -->
+                <div class="nav-item" data-url="https://bacoud97.vercel.app/pemecah_wd_lengkap.html" data-title="Pemecah WD">
+                    <div class="nav-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+                            <path d="M21 3v5h-5"></path>
+                        </svg>
+                    </div>
+                    <div class="nav-content">
+                        <div class="nav-title">Pemecah WD</div>
+                        <div class="nav-desc">Pemecahan withdraw</div>
+                    </div>
+                    <div class="nav-arrow">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Menu 7: Pemecahan Withdraw Besar -->
                 <div class="nav-item" data-url="https://proses-wd-by-qris-max-35-jt.vercel.app/35jt.html" data-title="Pemecahan Withdraw Besar">
                     <div class="nav-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1331,13 +1360,12 @@
                     </div>
                 </div>
 
-                <!-- Menu 7: Pemecahan Withdraw Besar 2 -->
+                <!-- Menu 8: Pemecahan Withdraw Besar 2 -->
                 <div class="nav-item" data-url="https://project-lilac-three-79.vercel.app/WDBESAR.HTML" data-title="Pemecahan Withdraw Besar 2">
                     <div class="nav-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
-                            <path d="M21 3v5h-5"></path>
-                            <path d="M12 7v5l3 3"></path>
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
                         </svg>
                     </div>
                     <div class="nav-content">
@@ -1351,7 +1379,7 @@
                     </div>
                 </div>
 
-                <!-- Menu 8: Total Validasi - NEW -->
+                <!-- Menu 9: Total Validasi -->
                 <div class="nav-item" data-url="https://bacoud97.vercel.app/total_validasi.html" data-title="Total Validasi">
                     <div class="nav-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
